@@ -1,6 +1,6 @@
 Name:		esc		
 Version:	1.1.2
-Release:	3
+Release:	4
 Summary:	esc embeds files into go programs and provides http		
 License:	GPL+
 URL:		https://github.com/mjibson/esc
@@ -55,7 +55,6 @@ ln -s %{_datadir}/icons/hicolor/48x48/apps/esc.png usr/share/pixmaps/esc.png
 popd
 
 install -m 0755 %{SOURCE2} %{buildroot}/%{_datadir}/applications
-cp -a %{_mandir} %{buildroot}%{_mandir}
 
 %files
 %defattr(-,root,root)
@@ -72,8 +71,13 @@ cp -a %{_mandir} %{buildroot}%{_mandir}
 
 %files help
 %defattr(-,root,root)
-%{_mandir}/*
 
 %changelog
+* Sat Mar 21 2020 openEuler Buildteam <buildteam@openeuler.org> - 1.1.2-4
+- Type: bugfix
+- ID: NA
+- SUG: NA
+- DESC: delete files in help package 
+
 * Thu Nov 21 2019 openEuler Buildteam <buildteam@openeuler.org> - 1.1.2-3
 - Package init
