@@ -1,6 +1,6 @@
 Name:		esc		
 Version:	1.1.2
-Release:	4
+Release:	5
 Summary:	esc embeds files into go programs and provides http		
 License:	GPL+
 URL:		https://github.com/mjibson/esc
@@ -56,6 +56,17 @@ popd
 
 install -m 0755 %{SOURCE2} %{buildroot}/%{_datadir}/applications
 
+chrpath -d %{buildroot}%{_libdir}/%{name}-%{version}/lib/libcoolkeymgr-1.0.so.0.0.0
+
+mkdir -p %{buildroot}/etc/ld.so.conf.d
+echo "/usr/local/lib" > %{buildroot}/etc/ld.so.conf.d/%{name}-%{_arch}.conf
+
+%post
+/sbin/ldconfig
+
+%postun
+/sbin/ldconfig
+
 %files
 %defattr(-,root,root)
 %doc README.md
@@ -68,11 +79,15 @@ install -m 0755 %{SOURCE2} %{buildroot}/%{_datadir}/applications
 %{_datadir}/pixmaps/esc.png
 %{_datadir}/applications/esc.desktop
 %{_datadir}/icons/hicolor/48x48/apps/esc.png
+%config(noreplace) /etc/ld.so.conf.d/*
 
 %files help
 %defattr(-,root,root)
 
 %changelog
+* Wed Sep 9 2021 caodongxia <caodongxia@huawei.com> - 1.1.2-5
+- Remove rpath
+
 * Sat Mar 21 2020 openEuler Buildteam <buildteam@openeuler.org> - 1.1.2-4
 - Type: bugfix
 - ID: NA
