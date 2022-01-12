@@ -1,6 +1,6 @@
 Name:		esc		
 Version:	1.1.2
-Release:	5
+Release:	6
 Summary:	esc embeds files into go programs and provides http		
 License:	GPL+
 URL:		https://github.com/mjibson/esc
@@ -12,6 +12,7 @@ Source3:	esc.png
 BuildRequires:  glib2-devel atk-devel pkgconfig nspr-devel nss-devel nss-static
 BuildRequires:	pcsc-lite-devel desktop-file-utils dbus-glib-devel glib2-devel gcc-c++
 BuildRequires:  opensc gobject-introspection-devel gtk3-devel gjs-devel GConf2-devel
+BuildRequires:  chrpath
 
 Requires:	pcsc-lite nss nspr dbus opensc gjs gobject-introspection gtk3 glib2
 
@@ -85,6 +86,9 @@ echo "/usr/local/lib" > %{buildroot}/etc/ld.so.conf.d/%{name}-%{_arch}.conf
 %defattr(-,root,root)
 
 %changelog
+* Wed Jan 12 2022 Ge Wang <wangge20@huawei.com> - 1.1.2-6
+- Add chrpath in BuildRequire
+
 * Wed Sep 9 2021 caodongxia <caodongxia@huawei.com> - 1.1.2-5
 - Remove rpath
 
