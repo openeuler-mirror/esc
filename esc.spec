@@ -1,6 +1,6 @@
 Name:		esc		
 Version:	1.1.2
-Release:	4
+Release:	5
 Summary:	esc embeds files into go programs and provides http		
 License:	GPL+
 URL:		https://github.com/mjibson/esc
@@ -12,6 +12,7 @@ Source3:	esc.png
 BuildRequires:  glib2-devel atk-devel pkgconfig nspr-devel nss-devel nss-static
 BuildRequires:	pcsc-lite-devel desktop-file-utils dbus-glib-devel glib2-devel gcc-c++
 BuildRequires:  opensc gobject-introspection-devel gtk3-devel gjs-devel GConf2-devel
+BuildRequires:  chrpath
 
 Requires:	pcsc-lite nss nspr dbus opensc gjs gobject-introspection gtk3 glib2
 
@@ -56,6 +57,17 @@ popd
 
 install -m 0755 %{SOURCE2} %{buildroot}/%{_datadir}/applications
 
+chrpath -d %{buildroot}%{_libdir}/%{name}-%{version}/lib/libcoolkeymgr-1.0.so.0.0.0
+
+mkdir -p %{buildroot}/etc/ld.so.conf.d
+echo "/usr/local/lib" > %{buildroot}/etc/ld.so.conf.d/%{name}-%{_arch}.conf
+
+%post
+/sbin/ldconfig
+
+%postun
+/sbin/ldconfig
+
 %files
 %defattr(-,root,root)
 %doc README.md
@@ -68,11 +80,16 @@ install -m 0755 %{SOURCE2} %{buildroot}/%{_datadir}/applications
 %{_datadir}/pixmaps/esc.png
 %{_datadir}/applications/esc.desktop
 %{_datadir}/icons/hicolor/48x48/apps/esc.png
+%config(noreplace) /etc/ld.so.conf.d/*
 
 %files help
 %defattr(-,root,root)
 
 %changelog
+* Sat Jul 30 2022 yaoxin <yaoxin30@h-partners.com> - 1.1.2-5
+- Remove rpath
+- Add chrpath in BuildRequire
+
 * Sat Mar 21 2020 openEuler Buildteam <buildteam@openeuler.org> - 1.1.2-4
 - Type: bugfix
 - ID: NA
