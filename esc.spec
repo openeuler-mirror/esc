@@ -1,6 +1,6 @@
 Name:		esc		
 Version:	1.1.2
-Release:	5
+Release:	6
 Summary:	esc embeds files into go programs and provides http		
 License:	GPL+
 URL:		https://github.com/mjibson/esc
@@ -8,6 +8,7 @@ Source0:	http://pki.fedoraproject.org/pki/sources/%{name}/%{name}-%{version}.tar
 Source1:	esc
 Source2:	esc.desktop
 Source3:	esc.png
+Patch0:   fix-clang-compile-error.patch
 
 BuildRequires:  glib2-devel atk-devel pkgconfig nspr-devel nss-devel nss-static
 BuildRequires:	pcsc-lite-devel desktop-file-utils dbus-glib-devel glib2-devel gcc-c++
@@ -86,6 +87,9 @@ echo "/usr/local/lib" > %{buildroot}/etc/ld.so.conf.d/%{name}-%{_arch}.conf
 %defattr(-,root,root)
 
 %changelog
+* Sat Apr 29 2023 yoo <sunyuechi@iscas.ac.cn> - 1.1-6
+- fix clang compile error
+
 * Sat Jul 30 2022 yaoxin <yaoxin30@h-partners.com> - 1.1.2-5
 - Remove rpath
 - Add chrpath in BuildRequire
